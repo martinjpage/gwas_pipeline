@@ -1,0 +1,5 @@
+api: gwas_catalog
+urls:
+  gwas_catalog: https://www.ebi.ac.uk/gwas/rest/api/
+keys:
+  gwas_catalog: None

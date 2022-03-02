@@ -1,0 +1,23 @@
+formatters:
+  basic:
+    datefmt: '%Y-%m-%d %H:%M:%S'
+    format: '{asctime:s}:{levelname:s}:{name:s}:{message:s}'
+    style: '{'
+  control:
+    format: '{message:s}'
+    style: '{'
+  verbose:
+    datefmt: '%Y-%m-%d %H:%M:%S'
+    format: '{asctime:s}:{levelname:s}:{name:s}:{lineno:d}:{message:s}'
+    style: '{'
+handlers:
+  console:
+    class: logging.StreamHandler
+    formatter: control
+    stream: ext://sys.stderr
+loggers:
+  gwas_pipeline:
+    handlers:
+    - console
+    level: INFO
+version: 1
