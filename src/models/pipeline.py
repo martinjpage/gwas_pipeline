@@ -27,4 +27,4 @@ class Pipeline:
     def run(self, id_term, name_term):
         raw_data = self._association_api.retrieve_data(id_term, name_term)
         processed_data, column_names = self._association_data_processor.extract_data(raw_data)
-        self._data_exporter.write(processed_data, column_names, self._config.project_paths.association_file)
+        self._data_exporter.write(processed_data, column_names, self._config.project_paths.association_out_file)

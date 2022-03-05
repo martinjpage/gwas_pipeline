@@ -39,10 +39,10 @@ class ConfigurationViewModel:
     def _validate_config(self, config):
         if 'project_paths' not in config.keys():
             raise ValueError('Config file must have an entry "project_paths"')
-        if "association_file" not in config['project_paths'].keys():
-            raise ValueError('Config file must have an entry "project_paths::association_file"')
-        if "ld_file" not in config['project_paths'].keys():
-            raise ValueError('Config file must have an entry "project_paths::ld_file"')
+        if "association_out_file" not in config['project_paths'].keys():
+            raise ValueError('Config file must have an entry "project_paths::association_out_file"')
+        if "ld_out_file" not in config['project_paths'].keys():
+            raise ValueError('Config file must have an entry "project_paths::ld_out_file"')
         if 'associations' not in config.keys():
             raise ValueError('Config file must have an entry "associations"')
         if "api" not in config['associations'].keys():
@@ -57,7 +57,8 @@ class ConfigurationViewModel:
             raise ValueError('Config file must have an entry "ld::ref_pop"')
 
     def _set_project_folder(self, config_project_folder):
-        if self.user_project_folder == "" and config_project_folder is None:
+        if self.user_project_folder == "" and \
+                config_project_folder is None or config_project_folder == 'None' or config_project_folder == "":
             self.logger.info("No project folder specified by user or config file. Default project folder will be created.")
             return os.path.join("default_project")
         return self.user_project_folder if self.user_project_folder != "" else config_project_folder

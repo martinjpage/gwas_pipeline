@@ -1,10 +1,12 @@
 project_paths: 
   project_folder: null
-  association_file: associations.csv
-  ld_file: ld_matrix.csv
+  association_out_file: associations.csv
+  ld_out_file: ld_matrix.csv
 associations:
   api: gwas_catalog
-  p_value: 0
+  p_value: 5e-8
 ld:
   api: ld_link
   ref_pop: null
+  mtag_in_file: mtag.txt
+  
