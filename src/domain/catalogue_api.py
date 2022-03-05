@@ -1,10 +1,9 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 
 
 class CatalogueAPI:
 
-    def __init__(self, url, key):
-        self._base_url = url
+    def __init__(self, key):
         self._key = key
 
     def retrieve_data(self, id_term, name_term):

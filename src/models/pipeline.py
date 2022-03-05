@@ -1,5 +1,6 @@
 from src.decorators.loggable import logger
-from src.domain.enums.api_type import APIType
+from src.domain.enums.associations_api_type import AssociationsAPIType
+from src.domain.enums.ld_api_type import LDAPIType
 from src.apis.gwas_catalog_api import GWASCatalogCatalogAPI
 from src.data_processors.gwas_data_processor import GWASCatalogDataProcessor
 from src.services.csv_report_writer import CSVReportWriter
@@ -13,12 +14,17 @@ class Pipeline:
         self._configure_pipeline()
 
     def _configure_pipeline(self):
-        if self._config.api.lower() == APIType.gwas_catalog.value.lower():
-            self._api = GWASCatalogCatalogAPI(self._config.url, self._config.key)
-            self._data_processor = GWASCatalogDataProcessor(self._config.key)
-            self._data_exporter = CSVReportWriter()
+        self._data_exporter = CSVReportWriter()
 
-    def run(self, id_term, name_term, output_path):
-        raw_data = self._api.retrieve_data(id_term, name_term)
-        processed_data, column_names = self._data_processor.extract_data(raw_data)
-        self._data_exporter.write(processed_data, column_names, output_path)
+        if self._config.associations.api.lower() == AssociationsAPIType.gwas_catalog.value.lower():
+            self._association_api = GWASCatalogCatalogAPI(self._config.associations)
+            self._association_data_processor = GWASCatalogDataProcessor(self._config.associations)
+
+        if self._config.ld.api.lower() == LDAPIType.ld_link.value.lower():
+            self._ld_api = None
+            self._ld_data_processor = None
+
+    def run(self, id_term, name_term):
+        raw_data = self._association_api.retrieve_data(id_term, name_term)
+        processed_data, column_names = self._association_data_processor.extract_data(raw_data)
+        self._data_exporter.write(processed_data, column_names, self._config.project_paths.association_file)

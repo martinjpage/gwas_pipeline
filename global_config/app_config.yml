@@ -1,5 +1,10 @@
-api: gwas_catalog
-urls:
-  gwas_catalog: https://www.ebi.ac.uk/gwas/rest/api/
-keys:
-  gwas_catalog: None
+project_paths: 
+  project_folder: null
+  association_file: associations.csv
+  ld_file: ld_matrix.csv
+associations:
+  api: gwas_catalog
+  p_value: 0
+ld:
+  api: ld_link
+  ref_pop: null

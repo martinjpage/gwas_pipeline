@@ -8,8 +8,8 @@ from src.view_models.configuration_view_model import ConfigurationViewModel
 @logger
 class ProjectViewModel:
 
-    def __init__(self):
-        self._config = ConfigurationViewModel()
+    def __init__(self, user_project_folder):
+        self._config = ConfigurationViewModel(user_project_folder)
         self._pipeline = None
 
     @property
@@ -20,17 +20,17 @@ class ProjectViewModel:
     def pipeline(self, pipeline):
         self._pipeline = pipeline
 
-    def run(self, id_term, name_term, output_path):
+    def run(self, id_term, name_term):
         logger = self._config.logger_config()
         app_config = self._config.application_config()
-        self._pipeline = self._run_pipeline(app_config, logger, id_term, name_term, output_path)
+        self._pipeline = self._run_pipeline(app_config, logger, id_term, name_term)
         return 0
 
-    def _run_pipeline(self, app_config, logger, id_term, name_term, output_path):
+    def _run_pipeline(self, app_config, logger, id_term, name_term):
         start = time.time()
         self._log_message(logger, f"GWAS Pipeline started.")
         pipeline = Pipeline(app_config)
-        pipeline.run(id_term, name_term, output_path)
+        pipeline.run(id_term, name_term)
         duration = time.time() - start
         self._log_message(logger, f"Successfully run GWAS Pipeline in {duration:0.3f}s")
         return pipeline

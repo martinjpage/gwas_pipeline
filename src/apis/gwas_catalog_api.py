@@ -24,7 +24,7 @@ class GWASCatalogCatalogAPI(CatalogueAPI):
 
     def _find_trait_code(self, trait_name: str) -> str:
         """Find the EFO trait ID of the trait label (disease term)"""
-        url = self._base_url + self._key.trait_code_url.format(trait_name)
+        url = self._key.base_url + self._key.trait_code_url.format(trait_name)
         response = self._query_api(url)
 
         if self._incorrect_entry_size(response, self._key.efo_traits):
@@ -36,7 +36,7 @@ class GWASCatalogCatalogAPI(CatalogueAPI):
         return trait_code
 
     def _get_raw_data(self, trait_code):
-        url = self._base_url + self._key.associations_url.format(trait_code)
+        url = self._key.base_url + self._key.associations_url.format(trait_code)
         return self._query_api(url)
 
     def _query_api(self, url: str, params={}) -> dict:
