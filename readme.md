@@ -15,22 +15,31 @@ The application setup is configured in the `app_config.yml` config file which re
 **`app_config.yml`**
 
 ```yaml
+project_paths: 
+  project_folder: null
+  association_out_file: associations.csv
+  ld_out_file: ld_matrix.csv
 associations:
-	api: gwas_catalog
-	p_value: 5x10^-8
+  api: gwas_catalog
+  p_value: 5e-8
 ld:
-	api: ld_link
-	ref_pop: 
+  api: ld_link
+  ref_pop: null
+  mtag_in_file: mtag.txt
 ```
 
-1. **`associations::api`**: name of the API to search for associations (valid APIs are enumerated in `/domain/enums/associations_api_type`)
-2. **`associations::p_value`**:
-3. **`ld::api`**: name of the API to calculate LD score (valid APIs are enumerated in `/domain/enums/ld_api_type`)
-4. **`ld::ref_pop`**:
+1. **`project_paths::project_folder`**: (optional) path to project folder; preference given to command-line input but at least one project folder is required
+2. **`project_paths::association_out_file`**: file name for annotated table of associations
+3. **`project_paths::ld_out_file`**: file name for LD matrix
+4. **`associations::api`**: name of the API to search for associations (valid APIs are enumerated in `/domain/enums/associations_api_type`)
+5. **`associations::p_value`**: minimum p-value to filter associations for genome-wide significance
+6. **`ld::api`**: name of the API to calculate LD score (valid APIs are enumerated in `/domain/enums/ld_api_type`)
+7. **`ld::ref_pop`**: reference population for LD score calculations
+8. **`ld::mtag_in_file`**: file path to mTAG input for LD calculation
 
 ### API-Specific Settings
 
-Based on the selected APIs in `app_config.yml`,  `key:value` mappings to access data fields are loaded from API-specific config files located in `/global_config/`.
+Based on the selected APIs in `app_config.yml`,  `key:value` mappings to access data fields are loaded from API-specific config files located in `/global_config/`. Keys include the urls to retrieve the data and paths to access the data field.
 
 For example, **`gwas_catalog_config.yml`**:
 
@@ -48,13 +57,13 @@ p_value: pvalue
 
 ## Running GWAS Pipeline
 
-The pipeline is executed through `python gwas_pipeline.py` with the following arguments. Either an  `id` or `name` must be provided. 
+The pipeline is executed through `python gwas_pipeline.py` with the following arguments. Either an  `id` or `name` must be exclusively provided. 
 
 `-id`						search for associations based on trait ID code
 
-`-n, --name`		searched for associations based on trait name.
+`-n, --name`		search for associations based on trait name.
 
-`-o, --output`	file path for save outputs (project folder)
+`-o, --output`	folder path for save outputs (project folder) (overrides path provided in config)
 
 ## Software Architecture
 

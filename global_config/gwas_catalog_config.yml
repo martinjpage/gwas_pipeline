@@ -1,7 +1,6 @@
 base_url: https://www.ebi.ac.uk/gwas/rest/api/
 trait_code_url: efoTraits/search/findByEfoTrait?trait={}
 associations_url: efoTraits/{}/associations?projection=associationByEfoTrait
-valid_bases: ACTG?
 efo_traits: _embedded/efoTraits
 trait_code: _embedded/efoTraits/0/shortForm
 associations: _embedded/associations
@@ -9,8 +8,6 @@ p_value: pvalue
 p_val_annotation: pvalueDescription
 odds_ratio: orPerCopyNum
 conf_int: range
-loci_description: loci/0/description
-loci_single_variant: Single variant
 loci: loci
 risk_alleles: loci/0/strongestRiskAlleles
 risk_allele_name: loci/0/strongestRiskAlleles/0/riskAlleleName
