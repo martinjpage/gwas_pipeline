@@ -1,7 +1,7 @@
 from src.decorators.loggable import logger
 from src.domain.enums.associations_api_type import AssociationsAPIType
 from src.domain.enums.ld_api_type import LDAPIType
-from src.apis.gwas_catalog_api import GWASCatalogCatalogAPI
+from src.apis.gwas_catalog_api import GWASCatalogAPI
 from src.data_processors.gwas_data_processor import GWASCatalogDataProcessor
 from src.services.gwas_data_exporter import GWASCatalogDataExporter
 
@@ -15,7 +15,7 @@ class Pipeline:
 
     def _configure_pipeline(self):
         if self._config.associations.api.lower() == AssociationsAPIType.gwas_catalog.value.lower():
-            self._association_api = GWASCatalogCatalogAPI(self._config.associations)
+            self._association_api = GWASCatalogAPI(self._config.associations)
             self._association_data_processor = GWASCatalogDataProcessor(self._config.associations)
             self._association_data_exporter = GWASCatalogDataExporter()
 

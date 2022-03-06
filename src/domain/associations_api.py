@@ -1,7 +1,7 @@
 from abc import abstractmethod
 
 
-class CatalogueAPI:
+class AssociationsAPI:
 
     def __init__(self, key):
         self._key = key

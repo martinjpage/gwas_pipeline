@@ -1,7 +1,7 @@
 from abc import abstractmethod
 
 
-class DataProcessor:
+class AssociationsDataProcessor:
 
     def __init__(self, key):
         self._key = key

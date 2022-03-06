@@ -1,12 +1,12 @@
 import re
 import dpath.util
 
-from src.domain.data_processor import DataProcessor
+from src.domain.associations_data_processor import AssociationsDataProcessor
 from src.decorators.loggable import logger
 
 
 @logger
-class GWASCatalogDataProcessor(DataProcessor):
+class GWASCatalogDataProcessor(AssociationsDataProcessor):
 
     def extract_data(self, raw_data):
         association_data = []

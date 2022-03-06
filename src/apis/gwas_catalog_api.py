@@ -2,11 +2,11 @@ import requests
 import dpath.util
 
 from src.decorators.loggable import logger
-from src.domain.catalogue_api import CatalogueAPI
+from src.domain.associations_api import AssociationsAPI
 
 
 @logger
-class GWASCatalogCatalogAPI(CatalogueAPI):
+class GWASCatalogAPI(AssociationsAPI):
 
     def _search_trait_name_for_alleles(self, trait_name: str) -> dict:
         """Find variant and risk alleles associated with a disease (trait) label in the GWAS Catalog Experimental
