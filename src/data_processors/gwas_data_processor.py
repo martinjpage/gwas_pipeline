@@ -15,7 +15,6 @@ class GWASCatalogDataProcessor(DataProcessor):
 
         for i, entry in enumerate(associations):
             self.logger.info(f"Processing entry {i + 1} of {associations_length}.")
-            # ToDo: check if single variant and skip entry if False
             if not self._check_single_variant(entry):
                 self.logger.info(f'Entry {i + 1} is not a single variant. Skipping entry.')
                 continue
@@ -49,8 +48,10 @@ class GWASCatalogDataProcessor(DataProcessor):
     def _get_associations(self, raw_data):
         return dpath.util.get(raw_data, self._key.associations)
 
-    def _check_single_variant(self, entry):
-        return True
+    def _check_single_variant(self, data):
+        if dpath.util.get(data, self._key.loci_description).lower() == self._key.loci_single_variant.lower():
+            return True
+        return False
 
     def _check_entry(self, i, entry):
         if self._incorrect_entry_size(entry, self._key.loci):

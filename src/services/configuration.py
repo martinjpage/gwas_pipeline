@@ -1,4 +1,3 @@
-import re
 import yaml
 from collections import namedtuple
 

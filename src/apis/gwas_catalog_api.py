@@ -1,8 +1,8 @@
-from src.domain.catalogue_api import CatalogueAPI
 import requests
 import dpath.util
 
 from src.decorators.loggable import logger
+from src.domain.catalogue_api import CatalogueAPI
 
 
 @logger

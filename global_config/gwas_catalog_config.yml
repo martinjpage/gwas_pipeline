@@ -9,6 +9,8 @@ p_value: pvalue
 p_val_annotation: pvalueDescription
 odds_ratio: orPerCopyNum
 conf_int: range
+loci_description: loci/0/description
+loci_single_variant: Single variant
 loci: loci
 risk_alleles: loci/0/strongestRiskAlleles
 risk_allele_name: loci/0/strongestRiskAlleles/0/riskAlleleName
