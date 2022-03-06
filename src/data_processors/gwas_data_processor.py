@@ -14,29 +14,29 @@ class GWASCatalogDataProcessor(DataProcessor):
         associations_length = len(associations) - 1
 
         for i, entry in enumerate(associations):
-            self.logger.info(f"Processing entry {i + 1} of {associations_length}.")
-            if not self._check_single_variant(entry):
-                self.logger.info(f'Entry {i + 1} is not a single variant. Skipping entry.')
+            self.logger.info(f"Processing entry {i} of {associations_length}.")
+            if self._check_not_single_variant(entry):
+                self.logger.info(f'Entry {i} is not a single variant because there is more than one '
+                                 f'"strongestRiskAlleles". Skipping entry.')
                 continue
             self._check_entry(i, entry)
             full_allele = self._get_allele(entry)
             variant = self._get_variant(full_allele)
             risk_allele = self._get_risk_allele(full_allele)
+            # ToDo filter p-value: get value earlier; check if significant; skip entry if not
             p_value = self._get_p_value(entry)
             p_val_annotation = self._get_p_val_annotation(entry)
             raf = self._get_raf(entry)
             odds_ratio = self._get_or(entry)
             conf_interval = self._get_ci(entry)
             reported_genes = self._get_reported_genes(entry)
-            # ToDo: implement chromosome data extraction
-            # self._chromosome_path = self._get_chromosome_path(i, entry)
-            # chromosome_name = self._get_chromosome_name(entry)
-            # chromosome_position = self._get_chromosome_name(entry)
+            chromosome = self._get_chromosome(entry)
+            if chromosome is None:
+                self.logger.info(f"Entry {i} does not contain information of the chromosome location.")
+            chromosome_name = self._get_chromosome_name(chromosome)
+            chromosome_position = self._get_chromosome_name(chromosome)
             reported_trait = self._get_reported_trait(entry)
             study_id = self._get_study_id(entry)
-
-            chromosome_name = ""
-            chromosome_position = ""
 
             association_data.append([variant, risk_allele, p_value, p_val_annotation, raf, odds_ratio,
                                            conf_interval, reported_genes, chromosome_name, chromosome_position,
@@ -48,21 +48,17 @@ class GWASCatalogDataProcessor(DataProcessor):
     def _get_associations(self, raw_data):
         return dpath.util.get(raw_data, self._key.associations)
 
-    def _check_single_variant(self, data):
-        if dpath.util.get(data, self._key.loci_description).lower() == self._key.loci_single_variant.lower():
+    def _check_not_single_variant(self, data):
+        if self._incorrect_entry_size(data, self._key.risk_alleles):
             return True
         return False
 
     def _check_entry(self, i, entry):
         if self._incorrect_entry_size(entry, self._key.loci):
-            raise ValueError(f'The number of loci is not one for entry {i + 1}. Method assumes one locus.')
-
-        if self._incorrect_entry_size(entry, self._key.risk_alleles):
-            raise ValueError(f'The number of strongestRiskAlleles for entry {i + 1} is not one. Method assumes one '
-                             f'strongest risk allele.')
+            raise ValueError(f'The number of loci is not one for entry {i}. Method assumes one locus.')
 
         if self._incorrect_entry_size(entry, self._key.snps):
-            raise ValueError(f'The number of snps for entry {i + 1} is not one. Method assumes one single nucleotide '
+            raise ValueError(f'The number of snps for entry {i} is not one. Method assumes one single nucleotide '
                              f'polymorphism.')
 
     def _incorrect_entry_size(self, data: dict, entry_path: str) -> bool:
@@ -87,7 +83,6 @@ class GWASCatalogDataProcessor(DataProcessor):
         matched_group = re.match(regex, allele_name)
         if self._check_regex_match(matched_group, allele_name):
             risk_allele = matched_group.groups()[0]
-        self._check_base_transition(risk_allele)
         return risk_allele
 
     def _check_regex_match(self, matched_group, allele_name):
@@ -98,10 +93,6 @@ class GWASCatalogDataProcessor(DataProcessor):
             self.logger.warning(f"Allele name '{allele_name}' could not be split into a variant and risk allele.")
             return False
         return True
-
-    def _check_base_transition(self, risk_allele):
-        if risk_allele not in self._key.valid_bases:
-            self.logger.warning(f"'{risk_allele}' is not valid nucleotide base.")
 
     def _get_p_value(self, entry):
         return dpath.util.get(entry, self._key.p_value)
@@ -128,31 +119,23 @@ class GWASCatalogDataProcessor(DataProcessor):
             gene_names.append(gene_name)
         return ", ".join(gene_names)
 
-    def _get_chromosome_path(self, i, entry):
-        chromosome_path = ""
-        chromosomes = dpath.util.get(entry, self._key.chromosomes)
-
-        for i, chromosome in enumerate(chromosomes):
-            if 'CHR' not in dpath.util.get(chromosome, self._key.chromosome_name):
-                chromosome_path = i
-
-        if chromosome_path == "":
-            self.logger.info(f"Entry {i + 1} does not contain information of the chromosome location.")
-        return chromosome_path
-
     def _get_chromosome_name(self, entry):
-        chromosome_name = ""
-
-        if self._chromosome_path != "":
-            chromosome_name = dpath.util.get(entry, self._chromosome_path + self._key.chromosome_name)
-        return chromosome_name
+        if entry is None:
+            return ""
+        return dpath.util.get(entry, self._key.chromosome_name)
 
     def _get_chromosome_position(self, entry):
-        chromosome_position = ""
+        if entry is None:
+            return ""
+        return dpath.util.get(entry, self._key.chromosome_position)
 
-        if self._chromosome_path != "":
-            chromosome_position = dpath.util.get(entry, self._chromosome_path + self._key.chromosome_position)
-        return chromosome_position
+    def _get_chromosome(self, entry):
+        chromosomes = dpath.util.get(entry, self._key.chromosomes)
+
+        for chromosome in chromosomes:
+            if 'CHR' not in dpath.util.get(chromosome, self._key.chromosome_name):
+                return chromosome
+        return None
 
     def _get_reported_trait(self, data):
         return dpath.util.get(data, self._key.reported_trait)

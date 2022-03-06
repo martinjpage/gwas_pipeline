@@ -3,7 +3,6 @@ from enum import Enum
 
 class GWASCatalogKeys(Enum):
     base_url = 'https://www.ebi.ac.uk/gwas/rest/api/'
-    valid_bases = 'ACTG?'
     efo_traits = '_embedded/efoTraits'
     trait_code = '_embedded/efoTraits/0/shortForm'
     associations = '_embedded/associations'

@@ -11,7 +11,6 @@ class TestGWASCatalogDataProcessor:
             self._json_data = json.load(f)
 
         config = {
-            'valid_bases': 'ACTG?',
             'efo_traits': '_embedded/efoTraits',
             'trait_code':' _embedded/efoTraits/0/shortForm',
             'associations': '_embedded/associations',
@@ -32,7 +31,8 @@ class TestGWASCatalogDataProcessor:
             'chromosome_name': 'chromosomeName',
             'chromosome_position': 'chromosomePosition',
             'study_id': 'study/accessionId',
-            'reported_trait': 'study/diseaseTrait/trait}'}
+            'reported_trait': 'study/diseaseTrait/trait'}
+
         self._config = namedtuple('configuration', config.keys())(**config)
 
     def test_extract_data(self):

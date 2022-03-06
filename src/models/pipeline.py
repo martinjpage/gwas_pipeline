@@ -14,8 +14,6 @@ class Pipeline:
         self._configure_pipeline()
 
     def _configure_pipeline(self):
-
-
         if self._config.associations.api.lower() == AssociationsAPIType.gwas_catalog.value.lower():
             self._association_api = GWASCatalogCatalogAPI(self._config.associations)
             self._association_data_processor = GWASCatalogDataProcessor(self._config.associations)
