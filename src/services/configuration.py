@@ -22,7 +22,7 @@ class Configuration:
         self.project_folder = self._config["project_paths"]["project_folder"]
         self.project_paths = self._convert(self._config["project_paths"])
         associations = self._config["associations"]
-        associations['p_value'] = self._convert_scientific_to_float(associations['p_value'])
+        associations['sig_p_value'] = self._convert_scientific_to_float(associations['sig_p_value'])
         associations_keys = self._get_config_file(self._config["project_paths"][associations['api']])
         self.associations = self._convert(associations | associations_keys)
         ld = self._config["ld"]

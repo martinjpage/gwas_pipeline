@@ -24,19 +24,19 @@ class GWASCatalogAPI(AssociationsAPI):
 
     def _find_trait_code(self, trait_name: str) -> str:
         """Find the EFO trait ID of the trait label (disease term)"""
-        url = self._key.base_url + self._key.trait_code_url.format(trait_name)
+        url = self._config.base_url + self._config.trait_code_url.format(trait_name)
         response = self._query_api(url)
 
-        if self._incorrect_entry_size(response, self._key.efo_traits):
+        if self._incorrect_entry_size(response, self._config.efo_traits):
             raise ValueError(f'The number of efoTraits at {url} is not one. Inspect URL and check the'
                              'trait name search term.')
 
-        trait_code = dpath.util.get(response, self._key.trait_code)
+        trait_code = dpath.util.get(response, self._config.trait_code)
         self.logger.info(f"Found the trait ID '{trait_code}' for '{trait_name}'.")
         return trait_code
 
     def _get_raw_data(self, trait_code):
-        url = self._key.base_url + self._key.associations_url.format(trait_code)
+        url = self._config.base_url + self._config.associations_url.format(trait_code)
         return self._query_api(url)
 
     def _query_api(self, url: str, params={}) -> dict:

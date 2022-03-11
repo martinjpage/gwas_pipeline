@@ -3,8 +3,8 @@ from abc import abstractmethod
 
 class AssociationsAPI:
 
-    def __init__(self, key):
-        self._key = key
+    def __init__(self, config):
+        self._config = config
 
     def retrieve_data(self, id_term, name_term):
         if id_term is None:

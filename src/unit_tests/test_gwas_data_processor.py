@@ -31,7 +31,8 @@ class TestGWASCatalogDataProcessor:
             'chromosome_name': 'chromosomeName',
             'chromosome_position': 'chromosomePosition',
             'study_id': 'study/accessionId',
-            'reported_trait': 'study/diseaseTrait/trait'}
+            'reported_trait': 'study/diseaseTrait/trait',
+            'sig_p_value': 0.000001}
 
         self._config = namedtuple('configuration', config.keys())(**config)
 

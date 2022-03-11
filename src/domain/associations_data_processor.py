@@ -3,8 +3,8 @@ from abc import abstractmethod
 
 class AssociationsDataProcessor:
 
-    def __init__(self, key):
-        self._key = key
+    def __init__(self, config):
+        self._config = config
         self._association_names = ['variant', 'risk_allele', 'p_value', "p_val_annotation", "RAF", "OR", "CI",
                                    "reported_genes", "chromosome_name", "chromosome_position", "reported_trait",
                                    "study"]

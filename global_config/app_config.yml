@@ -4,7 +4,7 @@ project_paths:
   ld_out_file: ld_matrix.csv
 associations:
   api: gwas_catalog
-  p_value: 5e-8
+  sig_p_value: 5e-8
 ld:
   api: ld_link
   ref_pop: null
