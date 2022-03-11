@@ -5,6 +5,7 @@ from src.decorators.loggable import logger
 from src.domain.associations_api import AssociationsAPI
 
 
+# ToDo: errors handling for bad request response
 @logger
 class GWASCatalogAPI(AssociationsAPI):
 

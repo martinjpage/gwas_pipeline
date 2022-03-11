@@ -1,0 +1,4 @@
+base_url: https://ldlink.nci.nih.gov/LDlinkRest/ldmatrix?
+snps_url: snps={}%0A
+params_url: &pop={}&r2_d={}&genome_build={}&token={}
+token: 38b336ccb8fb

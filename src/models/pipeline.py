@@ -24,6 +24,8 @@ class Pipeline:
             self._ld_data_processor = None
 
     def run(self, id_term, name_term):
+        # ToDo: Decide if association_api should move inside association_data_processor
+        #  (makes sense for LD step because must make multiple calls and processing)
         raw_data = self._association_api.retrieve_data(id_term, name_term)
         processed_data, column_names = self._association_data_processor.extract_data(raw_data)
         unique_variants = self._association_data_exporter.get_unique_variants(processed_data, column_names)

@@ -6,7 +6,10 @@ associations:
   api: gwas_catalog
   sig_p_value: 5e-8
 ld:
-  api: ld_link
-  ref_pop: null
+  api: ld_matrix
+  ref_pop: CEU
+  genome_build: grch37
+  score: r
   mtag_in_file: mtag.txt
-  
+  snp_col: null
+  chr_col: null
