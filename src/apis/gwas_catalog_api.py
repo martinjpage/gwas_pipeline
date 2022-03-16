@@ -2,12 +2,12 @@ import requests
 import dpath.util
 
 from src.decorators.loggable import logger
-from src.domain.associations_api import AssociationsAPI
+from src.domain.associations_api_prototype import AssociationsAPIPrototype
 
 
 # ToDo: errors handling for bad request response
 @logger
-class GWASCatalogAPI(AssociationsAPI):
+class GWASCatalogAPI(AssociationsAPIPrototype):
 
     def _search_trait_name_for_alleles(self, trait_name: str) -> dict:
         """Find variant and risk alleles associated with a disease (trait) label in the GWAS Catalog Experimental

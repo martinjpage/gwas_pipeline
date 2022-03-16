@@ -1,7 +1,7 @@
 from abc import abstractmethod
 
 
-class AssociationsDataProcessor:
+class AssociationsDataProcessorPrototype:
 
     def __init__(self, config):
         self._config = config

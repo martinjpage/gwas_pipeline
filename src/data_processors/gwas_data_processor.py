@@ -1,13 +1,13 @@
 import re
 import dpath.util
 
-from src.domain.associations_data_processor import AssociationsDataProcessor
+from src.domain.associations_data_processor_prototype import AssociationsDataProcessorPrototype
 from src.decorators.loggable import logger
 
 
 # ToDo: exception handling if path does not work (key errors)
 @logger
-class GWASCatalogDataProcessor(AssociationsDataProcessor):
+class GWASCatalogDataProcessor(AssociationsDataProcessorPrototype):
 
     def extract_data(self, raw_data):
         association_data = []

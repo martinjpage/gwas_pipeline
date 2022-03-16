@@ -1,7 +1,7 @@
 from abc import abstractmethod
 
 
-class AssociationsAPI:
+class AssociationsAPIPrototype:
 
     def __init__(self, config):
         self._config = config

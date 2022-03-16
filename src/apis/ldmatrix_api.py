@@ -3,12 +3,12 @@ import pandas as pd
 from io import StringIO
 
 from src.decorators.loggable import logger
-from src.domain.ld_api import LDAPI
+from src.domain.ld_api_prototype import LDAPIPrototype
 
 
 # ToDo: Error handling for bad requests; no data return
 @logger
-class LDMatrixAPI(LDAPI):
+class LDMatrixAPI(LDAPIPrototype):
 
     def get_ld_score(self, ref_snp: str, snp_list: list) -> pd.DataFrame:
         snp_request = self._create_snp_request(ref_snp, snp_list)

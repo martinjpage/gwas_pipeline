@@ -3,12 +3,15 @@ import time
 from src.decorators.loggable import logger
 from src.models.pipeline import Pipeline
 from src.view_models.configuration_view_model import ConfigurationViewModel
+from src.models.associations_processor import GWASCatalogProcessor
+from src.models.ldmatrix_processor import LDMatrixProcessor
 
 
 @logger
 class ProjectViewModel:
 
     def __init__(self, user_project_folder):
+        # ToDo - add mtag file path and column names for variant and chromosome into config (with user warnings)
         self._config = ConfigurationViewModel(user_project_folder)
         self._pipeline = None
 
@@ -22,6 +25,7 @@ class ProjectViewModel:
 
     def run(self, id_term, name_term):
         logger = self._config.logger_config()
+        # ToDo - create individual configs for each processor (loose coupling)
         app_config = self._config.application_config()
         self._pipeline = self._run_pipeline(app_config, logger, id_term, name_term)
         return 0
@@ -29,7 +33,9 @@ class ProjectViewModel:
     def _run_pipeline(self, app_config, logger, id_term, name_term):
         start = time.time()
         self._log_message(logger, f"GWAS Pipeline started.")
-        pipeline = Pipeline(app_config)
+        association_processor = GWASCatalogProcessor(app_config)
+        ld_processor = LDMatrixProcessor(app_config)
+        pipeline = Pipeline(app_config, association_processor, ld_processor)
         pipeline.run(id_term, name_term)
         duration = time.time() - start
         self._log_message(logger, f"Successfully run GWAS Pipeline in {duration:0.3f}s")

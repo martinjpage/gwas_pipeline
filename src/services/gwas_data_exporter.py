@@ -1,10 +1,11 @@
 import pandas as pd
 
+from src.domain.associations_data_exporter_prototype import AssociationsDataExporterPrototype
 from src.decorators.loggable import logger
 
 
 @logger
-class GWASCatalogDataExporter:
+class GWASCatalogDataExporter(AssociationsDataExporterPrototype):
     # ToDo: add chromosome name to output; variant should be on only one chromosome - can check
     def get_unique_variants(self, data: list, column_names: list) -> list:
         df = self._create_df(data, column_names)
