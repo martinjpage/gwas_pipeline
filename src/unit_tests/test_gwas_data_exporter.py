@@ -12,3 +12,4 @@ class TestGWASCatalogDataExporter:
     def test_get_unique_variants(self):
         exporter = GWASCatalogDataExporter()
         unique_variants = exporter.get_unique_variants(self._data, self._column_names)
+        print(unique_variants)

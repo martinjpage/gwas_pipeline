@@ -12,5 +12,5 @@ class Pipeline:
         self._ld_processor = ld_processor
 
     def run(self, id_term, name_term):
-        unique_association_variants = self._association_processor.find_unique_associations(id_term, name_term)
-        self._ld_processor.calculate_ld(unique_association_variants)
+        association_variants = self._association_processor.find_unique_associations(id_term, name_term)
+        self._ld_processor.calculate_ld(association_variants)
