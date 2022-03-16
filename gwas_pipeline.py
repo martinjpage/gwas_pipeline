@@ -14,8 +14,8 @@ def argument_collector():
 
 
 if __name__ == '__main__':
-    args = argument_collector()
-    # args = {'id': 'EFO_0000685', 'name': None, 'output': "C:\\Users\\Martin\\OneDrive\\Documents\\Study\\rp1"}
+    # args = argument_collector()
+    args = {'id': 'EFO_0000685', 'name': None, 'output': "C:\\Users\\Martin\\OneDrive\\Documents\\Study\\rp1"}
     # args = {'id': None, 'name': "breast carcinoma", 'output': "C:\\Users\\Martin\\OneDrive\\Documents\\Study\\rp1"}
     # ToDo - add mtag file path and column names for variant and chromosome
     command_main(args['id'], args['name'], args['output'])

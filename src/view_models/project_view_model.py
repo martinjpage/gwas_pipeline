@@ -25,17 +25,17 @@ class ProjectViewModel:
 
     def run(self, id_term, name_term):
         logger = self._config.logger_config()
-        # ToDo - create individual configs for each processor (loose coupling)
-        app_config = self._config.application_config()
-        self._pipeline = self._run_pipeline(app_config, logger, id_term, name_term)
+        associations_config = self._config.associations_config()
+        ld_config = self._config.ld_config()
+        self._pipeline = self._run_pipeline(associations_config, ld_config, logger, id_term, name_term)
         return 0
 
-    def _run_pipeline(self, app_config, logger, id_term, name_term):
+    def _run_pipeline(self, associations_config, ld_config, logger, id_term, name_term):
         start = time.time()
         self._log_message(logger, f"GWAS Pipeline started.")
-        association_processor = GWASCatalogProcessor(app_config)
-        ld_processor = LDMatrixProcessor(app_config)
-        pipeline = Pipeline(app_config, association_processor, ld_processor)
+        association_processor = GWASCatalogProcessor(associations_config)
+        ld_processor = LDMatrixProcessor(ld_config)
+        pipeline = Pipeline(association_processor, ld_processor)
         pipeline.run(id_term, name_term)
         duration = time.time() - start
         self._log_message(logger, f"Successfully run GWAS Pipeline in {duration:0.3f}s")

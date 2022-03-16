@@ -24,7 +24,7 @@ class GWASCatalogDataProcessor(AssociationsDataProcessorPrototype):
             p_value = self._get_p_value(entry)
             if self._not_genome_wide_significant(p_value):
                 self.logger.info(f'Entry {i} has a p-value ({p_value}) less than the threshold for genome-wide '
-                                 f'significance ({self._config.p_value}). Skipping entry.')
+                                 f'significance ({self._config.sig_p_value}). Skipping entry.')
                 continue
 
             if self._too_many_loci(entry):
