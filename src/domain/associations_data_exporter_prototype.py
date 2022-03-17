@@ -3,7 +3,7 @@ from abc import abstractmethod
 
 class AssociationsDataExporterPrototype:
     @abstractmethod
-    def get_unique_variants(self, data, column_names):
+    def get_unique_snps(self, data, column_names):
         pass
 
     @abstractmethod

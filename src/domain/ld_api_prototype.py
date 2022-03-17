@@ -8,5 +8,5 @@ class LDAPIPrototype:
         self._config = config
 
     @abstractmethod
-    def get_ld_score(self, snp_list: list) -> pd.DataFrame:
+    def get_ld_score(self, ref_snp_list: list, association_snp_list: list) -> pd.DataFrame:
         pass

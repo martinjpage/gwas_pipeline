@@ -11,5 +11,5 @@ class TestGWASCatalogDataExporter:
 
     def test_get_unique_variants(self):
         exporter = GWASCatalogDataExporter()
-        unique_variants = exporter.get_unique_variants(self._data, self._column_names)
-        print(unique_variants)
+        unique_variants = exporter.get_unique_snps(self._data, self._column_names)
+        unique_variants.to_csv('assoc_snps.csv')

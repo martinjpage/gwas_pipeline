@@ -1,7 +1,6 @@
 from src.decorators.loggable import logger
 
 
-
 @logger
 class Pipeline:
 
@@ -11,5 +10,5 @@ class Pipeline:
         self._ld_processor = ld_processor
 
     def run(self, id_term, name_term):
-        association_variants = self._association_processor.find_unique_associations(id_term, name_term)
+        association_snps = self._association_processor.find_unique_snps(id_term, name_term)
         # self._ld_processor.calculate_ld(association_variants)

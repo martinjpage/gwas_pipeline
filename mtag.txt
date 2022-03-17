@@ -1,0 +1,11 @@
+snp_name	chrom_name	other
+rs2240335	1	nonsense
+rs2476601	1	nonsense
+rs2476601	1	nonsense
+rs2240335	1	
+rs3792109	2	nonsense
+rs1432296	2	nonsense
+rs2558210	2	nonsense
+rs3087243	2
+rs5987194	X	nonsense
+rs13397	X

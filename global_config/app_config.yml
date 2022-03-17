@@ -9,6 +9,6 @@ ld:
   genome_build: grch37
   score: r
   mtag_in_file: mtag.txt
-  snp_col: null
-  chr_col: null
+  snp_col: snp_name
+  chr_col: chrom_name
   ld_out_file: ld_matrix.csv
