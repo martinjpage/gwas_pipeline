@@ -22,3 +22,4 @@ class TestLDMatrixAPI:
                             'rs11119608', 'rs11161996', 'rs11205303']
 
         raw_data = api.get_ld_score(mtag_snps, association_snps)
+        print(raw_data)

@@ -11,4 +11,4 @@ class Pipeline:
 
     def run(self, id_term, name_term):
         association_snps = self._association_processor.find_unique_snps(id_term, name_term)
-        # self._ld_processor.calculate_ld(association_variants)
+        self._ld_processor.calculate_highest_ld(association_snps)

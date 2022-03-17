@@ -19,14 +19,11 @@ class LDMatrixProcessor:
         mtag_snps = self._mtag_parser.read_file(self._config.mtag_in_file, self._config.snp_col, self._config.chr_col)
         batch = self._data_processor.batch_by_chromosome(mtag_snps, association_snps)
 
-        # for chromosome, variants in batch.items():
-        #     self.logger.info(f"Processing SNPs on chromosome {chromosome}.")
-        #     ld_matrix = self._api.get_ld_score(variants['variant_mtag'], variants['variant_assoc'])
-        #
+        for chromosome, variants in batch.items():
+            self.logger.info(f"Processing SNPs on chromosome {chromosome}.")
+            ld_matrix = self._api.get_ld_score(variants['variant_mtag'], variants['variant_assoc'])
+            print(ld_matrix)
 
-        # highest_score = pd.DataFrame
-        # for ref_snps, assoc_snps in batch.values():
-        #      ld_matrix = self._api.get_ld_score(ref_snps, assoc_snps)
         #       highest_r2 =  self._data_processor._find_highest(ref_snps, assoc_snps, ld_matrix)
         #       highest_score.append(highest_r2)
         # self._data_exporter.write_table(highest_r2)
