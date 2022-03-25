@@ -54,7 +54,6 @@ class LDMatrixDataProcessor(LDDataProcessorPrototype):
         for mtag_variant, highest_r in highest_correlation.items():
             assoc_snps = self._find_highest_correlation(ld_matrix, mtag_variant, highest_r)
             self._add_matches(correlated_snps, assoc_snps, mtag_variant, highest_r, chromosome)
-        return correlated_snps
 
     def _find_highest_correlation(self, ld_matrix, variant, highest_r):
         return list(ld_matrix.columns[ld_matrix.loc[variant, :].values == highest_r])
