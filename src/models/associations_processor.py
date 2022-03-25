@@ -2,10 +2,8 @@ from src.domain.associations_processor_prototype import AssociationsProcessorPro
 from src.apis.gwas_catalog_api import GWASCatalogAPI
 from src.data_processors.gwas_data_processor import GWASCatalogDataProcessor
 from src.services.gwas_data_exporter import GWASCatalogDataExporter
-from src.decorators.loggable import logger
 
 
-@logger
 class GWASCatalogProcessor(AssociationsProcessorPrototype):
 
     def __init__(self, config):

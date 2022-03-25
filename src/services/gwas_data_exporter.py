@@ -16,11 +16,11 @@ class GWASCatalogDataExporter(AssociationsDataExporterPrototype):
         return unique_variants
 
     def write_table(self, data: list, column_names: list, output_path: str) -> None:
-        self.logger.info("Writing report to file")
+        self.logger.info("Writing annotated table of associations to file")
         df = self._create_df(data, column_names)
         # ToDo: catch PermissionError for user to close CSV or auto rename if file name exists; add trait name to file
         df.to_csv(output_path, index=False)
-        self.logger.info(f"Saved report to {output_path}")
+        self.logger.info(f"Saved annotated table of associations to {output_path}")
 
     def _create_df(self, data, column_names) -> pd.DataFrame:
         return pd.DataFrame(data=data, columns=column_names)

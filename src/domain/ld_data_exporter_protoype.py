@@ -2,5 +2,6 @@ from abc import abstractmethod
 
 
 class LDDataExporterPrototype:
-    def __init__(self, config):
-        self._config = config
+    @abstractmethod
+    def write_table(self, data, column_names, output_path):
+        pass
