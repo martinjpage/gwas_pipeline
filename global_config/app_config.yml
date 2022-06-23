@@ -1,4 +1,4 @@
-project_folder: null
+project_folder: C:\\Users\\Martin\\OneDrive\\Documents\\Study\\rp1\\JIA
 associations:
   api: gwas_catalog
   sig_p_value: 5e-8
@@ -8,7 +8,7 @@ ld:
   ref_pop: CEU
   genome_build: grch37
   score: r
-  mtag_in_file: mtag.txt
-  snp_col: snp_name
-  chr_col: chrom_name
+  mtag_in_file: jia_mtag_craft.txt
+  snp_col: rsid
+  chr_col: chromosome
   ld_out_file: ld_matrix.csv

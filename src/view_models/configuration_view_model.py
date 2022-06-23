@@ -114,7 +114,7 @@ class ConfigurationViewModel:
                              f"folder: {self._user_project_folder}.")
             return self._user_project_folder
         self.logger.info(f"No project folder was supplied in the command line execution. Using project folder from app"
-                         f"config: {self.config_project_folder}.")
+                         f"config: {config_project_folder}.")
         return config_project_folder
 
     def _create_full_path(self, project_folder, file_name):

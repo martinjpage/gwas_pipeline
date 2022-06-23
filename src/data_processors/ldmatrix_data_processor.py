@@ -32,7 +32,11 @@ class LDMatrixDataProcessor(LDDataProcessorPrototype):
         return df.groupby(level=0).agg(list)
 
     def _merge_snps(self, grouped_mtag_snps, grouped_association_snps):
-        return grouped_mtag_snps.join(grouped_association_snps, how='left', lsuffix='_mtag', rsuffix='_assoc')
+        grouped_mtag_snps.index = grouped_mtag_snps.index.map(str)
+        grouped_association_snps.index = grouped_association_snps.index.map(str)
+        merged_df = grouped_mtag_snps.join(grouped_association_snps, how='left', lsuffix='_mtag', rsuffix='_assoc')
+        merged_df.variant_assoc = merged_df['variant_assoc'].apply(lambda x: x if isinstance(x, list) else [])
+        return merged_df
 
     def _convert_to_dict(self, merged_df):
         return merged_df.T.to_dict()
@@ -59,5 +63,8 @@ class LDMatrixDataProcessor(LDDataProcessorPrototype):
         return list(ld_matrix.columns[ld_matrix.loc[variant, :].values == highest_r])
 
     def _add_matches(self, correlated_snps, assoc_snps, mtag_variant, highest_r, chromosome):
-        for assoc_snp in assoc_snps:
-            correlated_snps.append([mtag_variant, assoc_snp, highest_r, chromosome])
+        if len(assoc_snps) == 0:
+            correlated_snps.append([mtag_variant, np.nan, np.nan, chromosome])
+        else:
+            for assoc_snp in assoc_snps:
+                correlated_snps.append([mtag_variant, assoc_snp, highest_r, chromosome])
