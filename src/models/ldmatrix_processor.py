@@ -15,7 +15,6 @@ class LDMatrixProcessor:
         self._data_exporter = LDMatrixDataExporter()
 
     def calculate_highest_ld(self, association_snps):
-        # ToDo: note - params from config file but overridden by CL input before python config created
         mtag_snps = self._mtag_parser.read_file(self._config.mtag_in_file, self._config.snp_col, self._config.chr_col)
         batch = self._data_processor.batch_by_chromosome(mtag_snps, association_snps)
 

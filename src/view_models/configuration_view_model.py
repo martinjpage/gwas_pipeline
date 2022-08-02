@@ -88,7 +88,7 @@ class ConfigurationViewModel:
             raise ValueError('Config file must have an entry "ld::ld_out_file"')
 
     def _get_project_folder(self, config_project_folder):
-        # ToDo: check if folder exits otherwise create
+        # ToDo: check if folder exits otherwise create it
         if self._project_folder_is_set():
             return self._project_folder
         if self._no_user_or_config_project(config_project_folder):

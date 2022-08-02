@@ -6,12 +6,12 @@ from src.decorators.loggable import logger
 
 
 # ToDo: exception handling if path does not work (key errors)
+# ToDo: check X or Y (X=23, Y=24; XY=25); include 1 -22 (exclude non-autosomes)
 @logger
 class GWASCatalogDataProcessor(AssociationsDataProcessorPrototype):
 
-    def extract_data(self, raw_data):
+    def extract_data(self, associations):
         association_data = []
-        associations = self._get_associations(raw_data)
         associations_length = len(associations) - 1
 
         for i, entry in enumerate(associations):
@@ -69,9 +69,6 @@ class GWASCatalogDataProcessor(AssociationsDataProcessorPrototype):
 
         self.logger.info("All associations processed.")
         return association_data, self._association_names
-
-    def _get_associations(self, raw_data):
-        return dpath.util.get(raw_data, self._config.associations)
 
     def _not_single_variant(self, data):
         return self._incorrect_entry_size(data, self._config.risk_alleles)

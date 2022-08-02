@@ -2,11 +2,15 @@
 
 ## Introduction
 
-This guide covers the basic functionality and setup of a project for the GWAS pipeline. The GWAS pipeline searches a database of associations using a trait ID or trait name to return an annotated table of associations and a list of unique variants. An LD score is then calculated between the unique variants and a supplied mTAG output for a specified reference population to return a table of the highest $R^2$ values in the LD matrix.
+This guide covers the basic functionality and setup of a project for the GWAS pipeline. The GWAS pipeline searches a database of associations (for r1 the GWAS Catalog) using a trait ID or trait name to return an annotated table of associations and a list of unique variants. An LD score (from LDMatrix) is then retrieved between the unique variants and a supplied mTAG output for a specified reference population to return a table of the highest $R^2$ values.
 
 > Note: `Release 1` is implemented using `Python 3.10`.
 
 ## Configuration
+The application recieves instructions from two sources: (1) the `app_config.yml` and (2) the command line. Only the project folder can be set through both the config and the command line, with the project folder defined in the command line having preference. 
+
+To run a new project, create a new folder. Place an MTAG file in that folder. Set the parameters in the config file (importantly, the mtag file name with the  names of the chromosome and rs ID columns). Set the final parameters in the command line to run the application.
+
 
 ### Global Application Settings
 
@@ -15,27 +19,35 @@ The application setup is configured in the `app_config.yml` config file which re
 **`app_config.yml`**
 
 ```yaml
-project_paths: 
-  project_folder: null
-  association_out_file: associations.csv
-  ld_out_file: ld_matrix.csv
+project_folder: None
 associations:
   api: gwas_catalog
-  p_value: 5e-8
+  sig_p_value: 5e-8
+  association_out_file: associations.csv
 ld:
-  api: ld_link
-  ref_pop: null
-  mtag_in_file: mtag.txt
+  api: ld_matrix
+  ref_pop: CEU
+  genome_build: grch37
+  score: r
+  mtag_in_file: jia_mtag_craft.txt
+  snp_col: rsid
+  chr_col: chromosome
+  ld_out_file: ld_matrix.csv
+
 ```
 
-1. **`project_paths::project_folder`**: (optional) path to project folder; preference given to command-line input but at least one project folder is required
-2. **`project_paths::association_out_file`**: file name for annotated table of associations
-3. **`project_paths::ld_out_file`**: file name for LD matrix
-4. **`associations::api`**: name of the API to search for associations (valid APIs are enumerated in `/domain/enums/associations_api_type`)
-5. **`associations::p_value`**: minimum p-value to filter associations for genome-wide significance
-6. **`ld::api`**: name of the API to calculate LD score (valid APIs are enumerated in `/domain/enums/ld_api_type`)
-7. **`ld::ref_pop`**: reference population for LD score calculations
-8. **`ld::mtag_in_file`**: file path to mTAG input for LD calculation
+1. **`project_folder`**: (optional) path to project folder; preference given to command-line input but at least one project folder is required
+2. **`associations::api`**: name of the API to search for associations (valid APIs are enumerated in `/domain/enums/associations_api_type`), currently on GWAS Catalog is supported (https://www.ebi.ac.uk/gwas/)  
+3. **`associations::sig_p_value`**: minimum p-value to filter associations for genome-wide significance
+4. **`project_folder::association_out_file`**: (`.csv`) filename for CSV output of associations   
+5. **`ld::api`**: name of the API to calculate LD score (valid APIs are enumerated in `/domain/enums/ld_api_type`), currently on LD Matrix is supported (https://ldlink.nci.nih.gov/?tab=ldmatrix)
+6. **`ld::ref_pop`**: reference population for LD score calculations
+7. **`ld::genome_build`**: coordinate system of the genome data source
+8. **`ld::score`**: (default='r') measure of linkage disequilibrium to use
+9. **`ld::mtag_in_file`**: (`.txt`) file path to mTAG TXT input for LD calculation
+10. **`ld::snp_col`**: column name for SNP IDs in the mTAG file
+11. **`ld::chr_col`**: column name for chromosome in the mTAG file
+12. **`ld::ld_out_file`**: (`.csv`) filename for CSV output of highest pairwise ld score 
 
 ### API-Specific Settings
 
@@ -59,15 +71,18 @@ p_value: pvalue
 
 The pipeline is executed through `python gwas_pipeline.py` with the following arguments. Either an  `id` or `name` must be exclusively provided. 
 
-`-id`						search for associations based on trait ID code
+`-id`				(`str`) search the configured database for associations using the trait ID code
+`-n, --name`		(`str`) search the configured database for associations on trait name (trait name is used to find trait ID code)
+`-c, --child`         	include associations for child traits (`True` if flag supplied; `False` is omitted)
+`-o, --output`		(`str`) project folder path (overrides path provided in config)
 
-`-n, --name`		search for associations based on trait name.
 
-`-o, --output`	folder path for save outputs (project folder) (overrides path provided in config)
+## Release Notes
+If child traits are included, the EFO codes of the children are retrived by querying the parent (supplied) EFO ID on the Ontology Lookup Service at https://www.ebi.ac.uk/ols/index. There may be discrepancies between the child traits returned from GWAS Catalog and the Ontology Lookup Service.
 
 ## Software Architecture
 
-
+![Architecture](wiki/software_architecture.drawio.png)  
 
 ## Logging
 

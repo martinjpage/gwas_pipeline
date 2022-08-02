@@ -1,9 +1,0 @@
-snp_name	chrom_name	other
-rs11249433	1		
-rs2476601	1	nonsense
-rs3792109	2	nonsense
-rs1432296	2	nonsense
-rs2558210	2	nonsense
-rs3087243	2	
-rs5987194	X	nonsense
-rs5934618	X	nonsense

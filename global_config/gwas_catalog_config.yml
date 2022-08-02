@@ -1,6 +1,10 @@
 base_url: https://www.ebi.ac.uk/gwas/rest/api/
 trait_code_url: efoTraits/search/findByEfoTrait?trait={}
 associations_url: efoTraits/{}/associations?projection=associationByEfoTrait
+childen_url: https://www.ebi.ac.uk/ols/api/ontologies/efo/children?id={}
+child_terms: _embedded/terms
+child_efo: short_form
+child_name: label
 efo_traits: _embedded/efoTraits
 trait_code: _embedded/efoTraits/0/shortForm
 associations: _embedded/associations
