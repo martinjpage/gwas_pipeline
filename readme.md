@@ -71,10 +71,10 @@ p_value: pvalue
 
 The pipeline is executed through `python gwas_pipeline.py` with the following arguments. Either an  `id` or `name` must be exclusively provided. 
 
-`-id`				(`str`) search the configured database for associations using the trait ID code
-`-n, --name`		(`str`) search the configured database for associations on trait name (trait name is used to find trait ID code)
-`-c, --child`         	include associations for child traits (`True` if flag supplied; `False` is omitted)
-`-o, --output`		(`str`) project folder path (overrides path provided in config)
+`-id`				(`str`) search the configured database for associations using the trait ID code   
+`-n, --name`		(`str`) search the configured database for associations on trait name (trait name is used to find trait ID code)   
+`-c, --child`         	include associations for child traits (`True` if flag supplied; `False` is omitted)   
+`-o, --output`		(`str`) project folder path (overrides path provided in config)   
 
 
 ## Release Notes
@@ -116,7 +116,7 @@ loggers:
 version: 1
 ```
 
-##Disclaimer
+## Disclaimer
 
 Copyright (C) 2022 Martin J Page
 
